@@ -96,6 +96,19 @@ val str3 = "${str1}/${str2}"  // abc/123
 
 具体详见[字符串](concepts/types.md)
 
+### 字符串设置默认值
+
+Kotlin 中可以使用 if 表达式或者 `ifBlank` 方法来设置默认值。
+
+```kotlin
+fun main() {
+  val name = getName().ifBlank { "wwtg99" }
+  println(name)
+}
+
+fun getName(): String = if (Random.nextBoolean()) "" else "wwtg99"
+```
+
 ### 字符串操作（取字符、子串）
 
 Kotlin 的字符串操作也非常简单。
@@ -106,7 +119,21 @@ printlin(str[0])  // J
 println(str.substring(8..13))  // Kotlin, 前面包含，后面不包含
 ```
 
+### 正则表达式
+
+在 Kotlin 中使用 `Regex` 类来简化正则表达式的操作。
+
+```kotlin
+val regex = Regex("""\w*\d+\w*""")
+val input = "login: Pokemon5, password: 1q2w3e4r5t"
+val replacementResult = regex.replace(input, replacement = "xxx")
+println("Initial input: '$input'")
+println("Anonymized input: '$replacementResult'")
+```
+
 ### 类型转换
+
+Kotlin 中使用 `is` 进行类型判断。
 
 Java
 
@@ -193,6 +220,10 @@ for ((key, value) in map) { }
 
 Kotlin 中的集合分为了可变集合和不可变集合。
 
+List, Set, Map 都是不可变的，而 MutableList, MutableSet, MutableMap 是对应的可变集合。
+
+可以通过 `listOf(1, 2, 3)`，`mutableListOf(1, 2, 3)` 等方法创建。
+
 ## 方法
 
 Kotlin 使用 `fun` 定义方法。
@@ -239,12 +270,141 @@ fun doSomething(vararg numbers: Int) {
 }
 ```
 
-## 构造方法
+## 构造函数
+
+Kotlin 中类有一个主构造函数和若干次构造函数。主构造函数在类头中声明，它跟在类名与可选的类型参数后。
+
+```kotlin
+class Person constructor(firstName: String) { /*……*/ }
+```
+
+如果主构造函数没有任何注解或者可见性修饰符，可以省略这个 constructor 关键字。
+
+```kotlin
+class Person(firstName: String) { /*……*/ }
+```
+
+类也可以声明前缀有 constructor 的次构造函数，使用 `this` 委托到另一个构造函数。
+
+```kotlin
+class Person(val name: String) {
+  val children: MutableList<Person> = mutableListOf()
+  constructor(name: String, parent: Person) : this(name) {
+    parent.children.add(this)
+  }
+}
+```
+
+> 注：Kotlin 中创建对象不需要 new。
 
 ## Getters 和 Setters
 
+在类中使用 `var` 或 `val` 声明属性。会自动添加 getter 和 setter（val 无 setter），直接用属性名使用。
+
+```kotlin
+class Address {
+    var name: String = "wwtg99"
+    var street: String = "street"
+}
+
+fun copyAddress(address: Address): Address {
+  val result = Address()
+  result.name = address.name  // 将调用访问器
+  result.street = address.street  // 设置属性
+  return result
+}
+```
+
+## 可见性修饰符
+
+Kotlin 提供了四个可见性修饰符：private、 protected、 internal 和 public，默认是 public。
+
+简单来说，public 就是都可以访问，internal 是同模块都可以访问，protected 是内部及子类可访问，private 仅内部可访问。具体可参见[类与对象-可见性修饰符]()。
+
 ## POJO（数据类）
+
+Kotlin 提供了数据类，用于 POJO（简单 Java 对象）或仅保存数据的类，类似于 Lombok 的 `@Data` 注解。
+
+```
+data class User(val name: String, val age: Int)
+```
+
+数据类自动生成以下几个方法：
+
+- .equals()/.hashCode()
+- .toString() 格式是 "User(name=John, age=42)"
+- .componentN() 函数，按声明顺序对应于所有属性
+- .copy() 函数
+
+数据类还有一些能力和约束条件，详见[类与对象-数据类]()。
 
 ## 初始化代码块
 
+在类中可以提供初始化代码块，初始化块按照它们出现在类体中的顺序执行。
+
+```kotlin
+class InitOrderDemo(name: String) {
+  val firstProperty = "第一个属性: $name".also(::println)
+
+  init {
+    println("第一个初始化代码块打印 $name")
+  }
+
+  val secondProperty = "第二个属性: ${name.length}".also(::println)
+
+  init {
+    println("第二个初始化代码块打印 ${name.length}")
+  }
+}
+```
+
+## 类继承
+
+Kotlin 中默认的类都是 final 的，不允许继承，要继承需要添加 `open` 修饰符。
+
+```kotlin
+open class Shape {
+  open fun draw() { /*……*/ }
+}
+```
+
+子类使用冒号 `:` 继承，覆盖的方法前加 `override`。属性覆盖也类似。
+
+```kotlin
+class Circle() : Shape() {
+  override fun draw() { /*……*/ }
+}
+```
+
+详细可参考[类也对象-继承]()
+
+## 单例对象
+
+Kotlin 使用 `object` 可以声明一个单例对象。
+
+```kotlin
+object DataProviderManager {
+  fun registerDataProvider(provider: DataProvider) {
+    // ……
+  }
+
+  val allDataProviders: Collection<DataProvider>
+    get() = // ……
+}
+```
+
 ## 静态方法/变量
+
+Kotlin 使用伴生对象来提供静态方法和变量，使用 `companion object` 声明。
+
+```kotlin
+class MyClass {
+  companion object Factory {
+    fun create(): MyClass = MyClass()
+  }
+}
+
+val instance = MyClass.create()
+```
+
+> 注：伴生对象在运行时仍然是真实的实例成员，在 JVM 平台，如果使用 @JvmStatic 注解的方法或使用 @JvmField 注解或 const 关键词的属性，可以将伴生对象的成员生成为真正的静态方法和属性。

@@ -115,3 +115,85 @@ fun Request.getBody() =
         is HttpError -> throw HttpException(response.status)
     }
 ```
+
+## For 循环
+
+For 循环类似于 foreach。
+
+```kotlin
+for (item in collection) print(item)
+
+for (item: Int in ints) {
+    // ...
+}
+```
+
+支持区间表达式
+
+```kotlin
+for (i in 1..3) {
+    println(i)
+}
+
+for (i in 6 downTo 0 step 2) {
+    println(i)
+}
+```
+
+如果需要使用索引值，可以如下获取
+
+```kotlin
+for (i in array.indices) {
+    println(array[i])
+}
+
+for ((index, value) in array.withIndex()) {
+    println("the element at $index is $value")
+}
+```
+
+## while 循环
+
+while 和 do while 执行循环直到不满足条件，while 先检查再执行，do while 先执行一次再检查。
+
+```kotlin
+while (x > 0) {
+    x--
+}
+
+do {
+    val y = retrieveData()
+} while (y != null)
+```
+
+## 跳转
+
+Kotlin 也支持 break 和 continue 来跳出循环。同时还支持使用 `@` 来跳到指定的标签。
+
+```kotlin
+loop@ for (i in 1..100) {
+    for (j in 1..100) {
+        if (...) break@loop
+    }
+}
+```
+
+## 异常
+
+Kotlin 的异常与 Java 类似，使用 `throw` 抛出异常，使用 `try catch finally` 来处理。
+
+```kotlin
+try {
+    // some code
+} catch (e: SomeException) {
+    // handler
+} finally {
+    // optional finally block
+}
+```
+
+同时，`try` 可以是表达式。
+
+```kotlin
+val a: Int? = try { input.toInt() } catch (e: NumberFormatException) { null }
+```

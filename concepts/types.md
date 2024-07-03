@@ -47,7 +47,7 @@ val a2 = 1UL // ULong，即使未提供预期类型并且常量适于 UInt
 例：
 默认推断为 Double，显式指定为 Flout 使用 f 或 F 结尾。
 
-```
+```kotlin
 val pi = 3.14 // Double
 val d1 = 1.0 // Double
 val f1 = 1.1f // Float
@@ -68,7 +68,7 @@ Kotlin 不支持八进制。
 
 过长可用下划线分隔，如：
 
-```
+```kotlin
 val oneMillion = 1_000_000
 val creditCardNumber = 1234_5678_9012_3456L
 val socialSecurityNumber = 999_99_9999L
@@ -150,14 +150,14 @@ String 双引号包裹，如 `"abc"`
 - 支持转义字符，如 \n
 - 支持字符串模版（使用 `$` 或 `${}`）
 
-```
+```kotlin
 val s = "abc"
 println("$s.length is ${s.length}")
 ```
 
 #### 使用三个双引号包裹多行字符串
 
-```
+```kotlin
 val text = """
     for (c in "foo")
         print(c)
@@ -168,7 +168,7 @@ val text = """
 - 支持模版，模版中输出 `$` 用 `${'$'}_9.99`
 - 使用 `trimMargin()` 可删除多余的前导空格（默认 ｜ 作为边界前缀）
 
-```
+```kotlin
 val text = """
     |Tell me and I forget.
     |Teach me and I remember.
@@ -187,7 +187,7 @@ val text = """
 
 例：
 
-```
+```kotlin
 val simpleArray = arrayOf(1, 2, 3)
 val nullArray: Array<Int?> = arrayOfNulls(3) // 创建长度为 3 都是 null 的数组
 var exampleArray = emptyArray<String>() // 创建空数组
@@ -198,7 +198,7 @@ val asc = Array(5) { i -> (i * i).toString() } // 创建长度为 5，且元素�
 
 嵌套数组的元素同时也是数组。
 
-```
+```kotlin
 val twoDArray = Array(2) { Array<Int>(2) { 0 } }
 ```
 
@@ -206,7 +206,7 @@ val twoDArray = Array(2) { Array<Int>(2) { 0 } }
 
 使用 `[]` 索引操作符访问与修改元素。
 
-```
+```kotlin
 val simpleArray = arrayOf(1, 2, 3)
 val twoDArray = Array(2) { Array<Int>(2) { 0 } }
 
