@@ -251,7 +251,7 @@ fun doSomething(): Int {
 fun double(x: Int): Int = x * 2
 ```
 
-详细可参考[函数](./concepts/functions.md)
+详细可参考[函数](./concepts/functions.md)。
 
 ## 方法参数默认值
 
