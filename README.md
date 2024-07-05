@@ -67,7 +67,7 @@ text?.let {
 val length = text?.length
 ```
 
-更多用法请参考[空安全](concepts/null.md)。
+更多用法请参考[空安全](./concepts/null.md)。
 
 ### 字符串判断空
 
@@ -82,7 +82,7 @@ Kotlin 为字符串提供了很多判断方法。
 - isNotBlank()：字符串不为空
 - isNullOrBlank()：字符串为 null 或者为空
 
-同时，可通过扩展方法扩展更多的功能，参考[扩展]()。
+同时，可通过扩展方法扩展更多的功能，参考[扩展](./concepts/classes_objects.md#扩展)。
 
 ### 字符串拼接、格式化
 
@@ -94,7 +94,7 @@ val str2 = "123"
 val str3 = "${str1}/${str2}"  // abc/123
 ```
 
-具体详见[字符串](concepts/types.md)
+具体详见[字符串](./concepts/types.md#字符串)。
 
 ### 字符串设置默认值
 
@@ -154,7 +154,7 @@ if (object is Car) {
 var car = object as? Car
 ```
 
-可参考[类型转换]()与[安全的类型转换](concepts/null.md)。
+可参考[安全的类型转换](./concepts/null.md#安全的类型转换)。
 
 ### 打印
 
@@ -194,7 +194,7 @@ val max = if (a > b) {
 }
 ```
 
-同时 Kotlin 还提供了类似 `switch` 的多分支判断表达式 `when`，详见[控制流程](concepts/control_flow.md)。
+同时 Kotlin 还提供了类似 `switch` 的多分支判断表达式 `when`，详见[控制流程](./concepts/control_flow.md#if-条件判断)。
 
 ## 循环
 
@@ -214,7 +214,7 @@ for (item in collection) { }
 for ((key, value) in map) { }
 ```
 
-详见[控制流程](concepts/control_flow.md)。
+详见[控制流程](./concepts/control_flow.md#for-循环)。
 
 ## 集合
 
@@ -249,6 +249,8 @@ fun doSomething(): Int {
 fun double(x: Int): Int = x * 2
 ```
 
+详细可参考[函数](./concepts/functions.md)
+
 ## 方法参数默认值
 
 Kotlin 支持方法参数的默认值，不需要额外重载方法。
@@ -269,6 +271,8 @@ fun doSomething(vararg numbers: Int) {
    // logic here
 }
 ```
+
+详细可参考[可变参数](./concepts/functions.md#可变参数)。
 
 ## 构造函数
 
@@ -315,11 +319,13 @@ fun copyAddress(address: Address): Address {
 }
 ```
 
+详细可参考[Getter 与 Setter](./concepts/classes_objects.md#getter-与-setter)。
+
 ## 可见性修饰符
 
 Kotlin 提供了四个可见性修饰符：private、 protected、 internal 和 public，默认是 public。
 
-简单来说，public 就是都可以访问，internal 是同模块都可以访问，protected 是内部及子类可访问，private 仅内部可访问。具体可参见[类与对象-可见性修饰符]()。
+简单来说，public 就是都可以访问，internal 是同模块都可以访问，protected 是内部及子类可访问，private 仅内部可访问。具体可参见[可见性修饰符](./concepts/classes_objects.md#可见性修饰符)。
 
 ## POJO（数据类）
 
@@ -336,7 +342,7 @@ data class User(val name: String, val age: Int)
 - .componentN() 函数，按声明顺序对应于所有属性
 - .copy() 函数
 
-数据类还有一些能力和约束条件，详见[类与对象-数据类]()。
+数据类还有一些能力和约束条件，详见[数据类](./concepts/classes_objects.md#数据类)。
 
 ## 初始化代码块
 
@@ -376,7 +382,7 @@ class Circle() : Shape() {
 }
 ```
 
-详细可参考[类也对象-继承]()
+详细可参考[继承](./concepts/classes_objects.md#继承)。
 
 ## 单例对象
 
@@ -408,3 +414,16 @@ val instance = MyClass.create()
 ```
 
 > 注：伴生对象在运行时仍然是真实的实例成员，在 JVM 平台，如果使用 @JvmStatic 注解的方法或使用 @JvmField 注解或 const 关键词的属性，可以将伴生对象的成员生成为真正的静态方法和属性。
+
+## 指南文档
+
+- [类型](./concepts/types.md)
+- [控制流程](./concepts/control_flow.md)
+- [包和导入](./concepts/packages_imports.md)
+- [类和对象](./concepts/classes_objects.md)
+- [函数](./concepts/functions.md)
+- [空安全](./concepts/null.md)
+
+## 参考
+
+- [Kotlin 官方文档](https://kotlinlang.org/docs/getting-started.html)
