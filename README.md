@@ -14,6 +14,8 @@ Kotlin 已经是一门成熟的编程语言，它简洁、高效、安全，可�
 
 下面是两者语法和特性的快速指南。
 
+[Github 版](https://github.com/wwtg99/java-to-kotlin-guide) / [Gitee 版](https://gitee.com/wwtg99/java-to-kotlin-guide)
+
 ## 基础
 
 ### 变量赋值
