@@ -417,6 +417,81 @@ val instance = MyClass.create()
 
 > 注：伴生对象在运行时仍然是真实的实例成员，在 JVM 平台，如果使用 @JvmStatic 注解的方法或使用 @JvmField 注解或 const 关键词的属性，可以将伴生对象的成员生成为真正的静态方法和属性。
 
+## 获取 Class
+
+Kotlin 需要获取 Java 的类（Class）对象可以通过以下方式：
+
+```kotlin
+// 1. 在类上调用 ::class.java, 其中 ::class 是 Kotlin 的类
+val myClass1 = MyClass::class.java
+// 2. 在实例上调用 javaClass
+val myClass2 = myInstance.javaClass
+```
+
+## Java 中调用 Kotlin
+
+### 属性
+
+Kotlin 的 var 属性会生成 Java 的 Getter/Setter，val 只有 Getter。
+
+### 包级函数
+
+Kotlin 的包级函数、扩展函数等，会生成一个特殊的 Java 类中的静态方法。例如，在 `org.example` 包内的 `app.kt` 文件中声明的所有的函数和属性，包括扩展函数，都编译成一个名为 `org.example.AppKt` 的 Java 类的静态方法。
+
+可以使用 `@JvmName` 注解自定义生成的 Java 类的类名。
+
+```kotlin
+@file:JvmName("DemoUtils")
+
+package org.example
+
+class Util
+
+fun getTime() { /*……*/ }
+```
+
+在 Java 中
+
+```java
+new org.example.Util();
+org.example.DemoUtils.getTime();
+```
+
+### 生成重载
+
+一个有默认实参值的 Kotlin 函数，在 Java 中只会有一个所有参数都存在的完整参数签名的方法。如果希望向 Java 调用者暴露多个重载，可以使用 `@JvmOverloads` 注解。该注解也适用于构造函数、静态方法等。但它不能用于抽象方法，包括在接口中定义的方法。对于每一个有默认值的参数，都会生成一个额外的重载，这个重载会把这个参数和它右边的所有参数都移除掉。
+
+```kotlin
+class Circle @JvmOverloads constructor(centerX: Int, centerY: Int, radius: Double = 1.0) {
+    @JvmOverloads fun draw(label: String, lineWidth: Int = 1, color: String = "red") { /*……*/ }
+}
+```
+
+会生成如下方法
+
+```java
+// 构造函数：
+Circle(int centerX, int centerY, double radius)
+Circle(int centerX, int centerY)
+
+// 方法
+void draw(String label, int lineWidth, String color) { }
+void draw(String label, int lineWidth) { }
+void draw(String label) { }
+```
+
+### 受检异常
+
+Kotlin 没有受检异常，Kotlin 函数的 Java 签名不会声明抛出异常，要声明这个异常，需要添加 `@Throws` 注解。
+
+```kotlin
+@Throws(IOException::class)
+fun writeToFile() {
+    /*……*/
+    throw IOException()
+}
+```
+
 ## 指南文档
 
 - [类型](./concepts/types.md)
