@@ -125,7 +125,7 @@ val customer = Customer("wwtg99")
 open class Base
 ```
 
-然后使用分号(:)声明继承的超类。
+然后使用分号(:)声明继承的父类。
 
 ```kotlin
 open class Base(p: Int)
@@ -133,7 +133,7 @@ open class Base(p: Int)
 class Derived(p: Int) : Base(p)
 ```
 
-如果子类有主构造函数，基类必须在主构造函数中初始化参数。如果子类没有主构造函数，那么次构造函数必须通过 `super` 关键词委托给基类或其他构造函数，这类似于 Java 的子类构造函数中必须使用 super 调用（或隐式调用）基类构造函数。
+如果子类有主构造函数，父类必须在主构造函数中初始化参数。如果子类没有主构造函数，那么次构造函数必须通过 `super` 关键词委托给父类或其他构造函数，这类似于 Java 的子类构造函数中必须使用 super 调用（或隐式调用）父类构造函数。
 
 ```kotlin
 class MyView : View {
@@ -158,7 +158,7 @@ class Circle() : Shape() {
 }
 ```
 
-标记为 `override` 的成员本身就是开放的，如果不想被再次覆盖，请 shiyong `final` 关键词。
+标记为 `override` 的成员本身就是开放的，如果不想被再次覆盖，请使用 `final` 关键词。
 
 ```kotlin
 open class Rectangle() : Shape() {
@@ -184,9 +184,9 @@ class Rectangle : Shape() {
 
 ### 继承的注意事项
 
-在派生类实例化的过程中，会首先完成基类的初始化，因此在基类初始化块的执行中请不要使用 `open` 的方法或属性，因为它们在子类中还没有初始化。
+在派生类实例化的过程中，会首先完成父类的初始化，因此在父类初始化块的执行中请不要使用 `open` 的方法或属性，因为它们在子类中还没有初始化。
 
-子类中可以使用 `super` 关键词调用超类中的方法或属性。如果超类中有同名的成员，可以使用尖括号区分。
+子类中可以使用 `super` 关键词调用父类中的方法或属性。如果父类中有同名的成员，可以使用尖括号区分。
 
 ```kotlin
 open class Rectangle {
@@ -239,14 +239,14 @@ var <propertyName>[: <PropertyType>] [= <property_initializer>]
 
 其中，初始化器、getter、setter 都是可选的，如果类型可以推断出来的话也是可选的。
 
-不可变属性没有 setter
+不可变属性没有 setter。
 
 ```kotlin
 val simple: Int? // 类型 Int, 默认的 getter, 必须在构造函数中初始化
 val inferredType = 1 // 推断出类型 Int，默认的 getter
 ```
 
-可以自定义属性获取方法，这样每次获取属性时都会调用
+可以自定义属性获取方法，这样每次获取属性时都会调用。
 
 ```kotlin
 class Rectangle(val width: Int, val height: Int) {
@@ -255,7 +255,7 @@ class Rectangle(val width: Int, val height: Int) {
 }
 ```
 
-自定义的属性设置方法，这样每次设置属性都会调用
+自定义的属性设置方法，这样每次设置属性都会调用。
 
 ```kotlin
 var stringRepresentation: String
@@ -320,7 +320,7 @@ class Child : MyInterface {
 
 在接口中声明的属性要么是抽象的，要么提供访问器的实现。
 
-```
+```kotlin
 interface MyInterface {
     val prop: Int // 抽象的
 
@@ -415,7 +415,7 @@ class Bar { ... }
 
 对于类内部的成员：
 
-- private 意味着只该成员在这个类内部（包含其所有成员）可见。
+- private 意味着该成员只在这个类内部（包含其所有成员）可见。
 - protected 意味着该成员具有与 private 一样的可见性，但也在子类中可见。
 - internal 意味着能见到类声明的本模块内都可见。
 - public 意味着能见到类声明的都可见。
@@ -523,7 +523,7 @@ data class User(val name: String, val age: Int)
 
 ### 类体中定义的属性
 
-自动生成仅针对主构造函数的属性，如果要排查某个属性，就在类体中定义。
+自动生成仅针对主构造函数的属性，如果要排除某个属性，就在类体中定义。
 
 ```kotlin
 data class Person(val name: String) {
@@ -535,7 +535,7 @@ data class Person(val name: String) {
 
 ### 解构声明
 
-数据类生成的 .componentN() 函数可用于对象结构。
+数据类生成的 .componentN() 函数可用于对象解构。
 
 ```kotlin
 val jane = User("Jane", 35)
@@ -913,16 +913,16 @@ class Delegate {
 
 `val` 必须提供 `getValue`，参数为：
 
-- thisRef 必须与属性所有者类型（对于扩展属性必须是被扩展的类型）相同或者是其超类型。
-- property 必须是类型 KProperty<\*> 或其超类型。
+- thisRef 必须与属性所有者类型（对于扩展属性必须是被扩展的类型）相同或者是其父类型。
+- property 必须是类型 KProperty<\*> 或其父类型。
 
 返回与属性相同的类型或其子类型。
 
 `var` 还必须提供 `setValue`，参数为：
 
-- thisRef 必须与属性所有者类型（对于扩展属性必须是被扩展的类型）相同或者是其超类型。
-- property 必须是类型 KProperty<\*> 或其超类型。
-- value 必须与属性类型相同（或者是其超类型）。
+- thisRef 必须与属性所有者类型（对于扩展属性必须是被扩展的类型）相同或者是其父类型。
+- property 必须是类型 KProperty<\*> 或其父类型。
+- value 必须与属性类型相同（或者是其父类型）。
 
 两函数都需要用 `operator` 关键词来进行标记。
 
@@ -1028,10 +1028,10 @@ fun main() {
         "name" to "wwtg99",
         "age"  to 25
     ))
-//sampleStart
+
     println(user.name) // Prints "wwtg99"
     println(user.age)  // Prints 25
-//sampleEnd
+
 }
 ```
 
