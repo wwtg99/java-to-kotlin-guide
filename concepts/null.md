@@ -1,6 +1,6 @@
 # 空安全
 
-在 Kotlin 中，类型系统区分一个引用可以容纳 null （可空引用）还是不能容纳（非空引用）。 例如，String 类型的常规变量不能容纳 null。如果要允许为空，可以声明一个变量为可空字符串（写作 String?）
+在 Kotlin 中，类型系统区分一个引用可以容纳 null （可空引用）还是不能容纳（非空引用）。 例如，String 类型的常规变量不能容纳 null。如果要允许为空，可以声明一个变量为可空字符串（写作 String?）。
 
 例：
 
@@ -14,6 +14,7 @@ var b: String? = "abc"  // 可以为 null
 使用 `if` 判断检测
 
 ```kotlin
+// 获取 b 的长度，b 为 null 则取 -1
 val l = if (b != null) b.length else -1
 ```
 
@@ -24,7 +25,7 @@ val b: String? = null
 println(b?.length)
 ```
 
-如果 b 非空，就返回 b.length，否则返回 null，这个表达式的类型是 Int?。
+如果 b 非空，就返回 b.length，否则返回 null，这个表达式的结果类型是 Int?。
 
 更长的链式调用
 
@@ -56,6 +57,8 @@ person?.department?.head = managersPool.getManager()
 ## Elvis 操作符
 
 类似于 Java 的三元操作符。
+
+Java 中：
 
 ```java
 String a = null;

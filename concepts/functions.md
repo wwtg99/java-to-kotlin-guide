@@ -111,7 +111,7 @@ fun double(x: Int): Int = x * 2
 - 它们必须只有一个参数。
 - 其参数不得接受可变数量的参数且不能有默认值。
 
-```
+```kotlin
 infix fun Int.shl(x: Int): Int { ... }
 
 // infix 表示法
@@ -370,7 +370,7 @@ interface IndexedContainer {
 | a++    | a.inc()        |
 | a--    | a.dec()        |
 
-`inc()` 和 `dec()` 函数必须返回一个值，它用于赋值给使用 ++ 或 -- 操作的变量。它们不应该改变在其上调用 `inc()` 或 `dec()` 的对象。
+`inc()` 和 `dec()` 函数必须返回一个值，它用于赋值给使用 `++` 或 `--` 操作的变量。它们不应该改变在其上调用 `inc()` 或 `dec()` 的对象。
 
 例：
 
